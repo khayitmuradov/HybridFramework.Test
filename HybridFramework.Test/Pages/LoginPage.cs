@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +13,36 @@ namespace HybridFramework.Test.Pages;
 public class LoginPage
 {
     private readonly IWebDriver _driver;
-
-    private IWebElement UsernameField => _driver.FindElement(By.Id("username"));
-    private IWebElement PasswordField => _driver.FindElement(By.Id("password"));
-    private IWebElement SubmitButton => _driver.FindElement(By.Id("submit"));
+    private readonly WebDriverWait _wait;
 
     public LoginPage(IWebDriver driver)
     {
         _driver = driver;
+        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
     }
 
-    public void Login(string username, string password)
+    private IWebElement EmailInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("input[type='email']")));
+    private IWebElement PasswordInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("input[type='password']")));
+    private IWebElement NextButton => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#identifierNext")));
+    private IWebElement SignInButton => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#passwordNext")));
+
+    public void EnterEmail(string email)
     {
-        UsernameField.SendKeys(username);
-        PasswordField.SendKeys(password);
-        SubmitButton.Click();
+        EmailInput.SendKeys(email);
+    }
+
+    public void EnterPassword(string password)
+    {
+        PasswordInput.SendKeys(password);
+    }
+
+    public void ClickNext()
+    {
+        NextButton.Click();
+    }
+
+    public void ClickSignIn()
+    {
+        SignInButton.Click();
     }
 }
