@@ -14,6 +14,7 @@ public class LoginPage
 {
     private readonly IWebDriver _driver;
     private readonly WebDriverWait _wait;
+    private readonly string _pageUrl = "https://accounts.google.com/";
 
     public LoginPage(IWebDriver driver)
     {
@@ -25,6 +26,11 @@ public class LoginPage
     private IWebElement PasswordInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("input[type='password']")));
     private IWebElement NextButton => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#identifierNext")));
     private IWebElement SignInButton => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#passwordNext")));
+
+    public void GoToPage()
+    {
+        _driver.Navigate().GoToUrl(_pageUrl);
+    }
 
     public void EnterEmail(string email)
     {
