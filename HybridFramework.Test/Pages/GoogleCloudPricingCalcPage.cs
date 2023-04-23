@@ -38,7 +38,11 @@ public class GoogleCloudPricingCalcPage
     private IWebElement CommitedUsageSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("select_option_133")));
     private IWebElement GetIntoMainForm => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("mainForm")));
     private IWebElement AddToEstimateBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".layout-align-end-start:nth-child(22) > .md-raised")));
-
+    private IWebElement CopyTotalEstimatedCost => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@class='cpc-cart-total']")));
+    
+    private IWebElement EmailPopUp => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("(//button[@class='md-fab md-primary md-mini md-button md-ink-ripple'])[2]")));
+    private IWebElement EmailInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("input_563")));
+    private IWebElement SendEmailBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".md-raised:nth-child(2)")));
 
     public void ClickComputEngineButton()
     {
@@ -154,5 +158,33 @@ public class GoogleCloudPricingCalcPage
     {
         GetIntoMainForm.Click();
         AddToEstimateBtn.Click();
+    }
+
+    public string CopyEstimatedCost()
+    {
+        string copiedText = CopyTotalEstimatedCost.Text;
+        string[] words = copiedText.Split(' ');
+        string desiredWord = words[4];
+        return desiredWord;
+    }
+
+    public void PopUpEmailWindow()
+    {
+        EmailPopUp.Click();
+    }
+
+    public void ClickInputEmail()
+    {
+        EmailInput.Click();
+    }
+
+    public void InputEmail(string email)
+    {
+        EmailInput.SendKeys(email);
+    }
+
+    public void ClickSendEmailBtn()
+    {
+        SendEmailBtn.Click();
     }
 }

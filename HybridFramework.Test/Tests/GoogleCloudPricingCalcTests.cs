@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace HybridFramework.Test.Tests;
 
@@ -56,8 +57,38 @@ public class GoogleCloudPricingCalcTests
         googleCloudPricingCalcPage.ClickCommitedUsage();
         googleCloudPricingCalcPage.SelectCommitedUsage();
         googleCloudPricingCalcPage.ClickAddToEstimate();
+        Thread.Sleep(1000);
 
-        Thread.Sleep(10000);
+
+        _driver.SwitchTo().NewWindow(WindowType.Tab);
+        _driver.Navigate().GoToUrl("https://yopmail.com/");
+
+        EmailGeneratorPage emailGeneratorPage = new EmailGeneratorPage(_driver);
+        emailGeneratorPage.GenerateEmail();
+        string email = emailGeneratorPage.CopyEmail();
+        Thread.Sleep(500);
+
+        _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+        Thread.Sleep(500);
+
+        _driver.SwitchTo().Frame(0);
+        _driver.SwitchTo().Frame(0);
+        googleCloudPricingCalcPage.PopUpEmailWindow();
+        googleCloudPricingCalcPage.ClickInputEmail();
+        googleCloudPricingCalcPage.InputEmail(email);
+        googleCloudPricingCalcPage.ClickSendEmailBtn();
+
+
+        _driver.SwitchTo().Window(_driver.WindowHandles[1]);
+        Thread.Sleep(1000);
+        emailGeneratorPage.ClickEmailInbox();
+        emailGeneratorPage.ClickRefresh();
+        _driver.SwitchTo().Frame(2);
+        string totalCost = emailGeneratorPage.GetTotalCost();
+        
+
+        Assert.That(totalCost, Is.EqualTo("Estimated Monthly Cost: USD 12,854.64"));
+        Thread.Sleep(1000);
     }
 
     [TearDown]
