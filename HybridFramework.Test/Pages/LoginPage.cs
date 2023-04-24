@@ -26,14 +26,10 @@ public class LoginPage
         _driver.Navigate().GoToUrl(_pageUrl);
     }
 
-    public void EnterEmail_and_ClickNext(string email)
+    public void Login(string email, string password)
     {
         EmailInput.SendKeys(email);
         NextButton.Click();
-    }
-
-    public void EnterPassword_and_ClickNext(string password)
-    {
         PasswordInput.SendKeys(password);
         SignInButton.Click();
     }

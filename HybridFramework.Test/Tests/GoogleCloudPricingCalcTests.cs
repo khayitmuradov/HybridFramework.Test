@@ -8,26 +8,25 @@ namespace HybridFramework.Test.Tests;
 public class GoogleCloudPricingCalcTests
 {
     private IWebDriver _driver;
-    private List<User> _credentialsList;
-    private User _credentials;
+    private List<User> _CREDENTIALSLIST;
+    private User _CREDENTIALS;
 
     [SetUp]
     public void SetUp()
     {
         _driver = new ChromeDriver();
         _driver.Manage().Window.Maximize();
-        _credentialsList = ConfigurationHelper.
+        _CREDENTIALSLIST = ConfigurationHelper.
             ReadJsonConfiguration<List<User>>("credentials/credentials.json");
     }
 
     [Test]
     public void TestIt()
     {
-        _credentials = _credentialsList[0];
+        _CREDENTIALS = _CREDENTIALSLIST[0];
         LoginPage loginPage = new LoginPage(_driver);
         loginPage.GoToPage();
-        loginPage.EnterEmail_and_ClickNext(_credentials.Email);
-        loginPage.EnterPassword_and_ClickNext(_credentials.Password);
+        loginPage.Login(_CREDENTIALS.Email, _CREDENTIALS.Password);
 
         GoogleCloudPricingCalcPage googleCloudPricingCalcPage = new GoogleCloudPricingCalcPage(_driver);
         googleCloudPricingCalcPage.GoToPage();
