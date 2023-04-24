@@ -1,12 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.PageObjects;
 using SeleniumExtras.WaitHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HybridFramework.Test.Pages;
 
@@ -32,23 +26,15 @@ public class LoginPage
         _driver.Navigate().GoToUrl(_pageUrl);
     }
 
-    public void EnterEmail(string email)
+    public void EnterEmail_and_ClickNext(string email)
     {
         EmailInput.SendKeys(email);
-    }
-
-    public void EnterPassword(string password)
-    {
-        PasswordInput.SendKeys(password);
-    }
-
-    public void ClickNext()
-    {
         NextButton.Click();
     }
 
-    public void ClickSignIn()
+    public void EnterPassword_and_ClickNext(string password)
     {
+        PasswordInput.SendKeys(password);
         SignInButton.Click();
     }
 }

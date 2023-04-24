@@ -1,16 +1,18 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.PageObjects;
 using SeleniumExtras.WaitHelpers;
 
 namespace HybridFramework.Test.Pages;
 
 public class GoogleCloudPricingCalcPage
 {
+    private readonly IWebDriver _driver;
     private readonly WebDriverWait _wait;
+    private readonly string _pageUrl = "https://cloud.google.com/products/calculator";
 
     public GoogleCloudPricingCalcPage(IWebDriver driver)
     {
+        _driver = driver;
         _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
     }
 
@@ -44,113 +46,72 @@ public class GoogleCloudPricingCalcPage
     private IWebElement EmailInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("input_563")));
     private IWebElement SendEmailBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".md-raised:nth-child(2)")));
 
+    public void GoToPage()
+    {
+        _driver.Navigate().GoToUrl(_pageUrl);
+    }
+
     public void ClickComputEngineButton()
     {
+        _driver.SwitchTo().Frame(0);
+        _driver.SwitchTo().Frame(0);
         ComputeEngineButton.Click();
     }
 
-    public void ClickInstances()
+    public void Click_and_InputInstances()
     {
         Instances.Click();
-    }
-
-    public void InputInstance()
-    {
         InstancesInput.SendKeys("4");
     }
 
-    public void ClickOperatingSys()
+    public void Click_and_SelectOperatingSys()
     {
         OperatingSys.Click();
-    }
-
-    public void SelectOS()
-    {
         OperatingSysSelection.Click();
     }
 
-    public void ClickProvisioningModel()
+    public void Click_and_SelectProvisioningModel()
     {
         ProvisioningModel.Click();
-    }
-
-    public void SelectProvisioningModel()
-    {
         ProvisioningModelSelection.Click();
     }
 
-    public void ClickSeries()
+    public void Click_and_SelectSeries()
     {
         Series.Click();
-    }
-
-    public void SelectSeries()
-    {
         SeriesSelection.Click();
     }
 
-    public void ClickMachineType()
+    public void Click_and_SelectMachineType()
     {
         MachineType.Click();
-    }
-
-    public void SelectMachineType()
-    {
         MachineTypeSelection.Click();
     }
 
     public void AddGPU()
     {
         AddGPUCheckbox.Click();
-    }
-
-    public void ClickGPUType()
-    {
         GPUType.Click();
-    }
-
-    public void SelectGPUType()
-    {
         GPUTypeSelection.Click();
-    }
-
-    public void ClickNumberOfGPUs()
-    {
         NumberOfGPUs.Click();
-    }
-
-    public void SelectNumberOfGPUs()
-    {
         NumberOfGPUsSelection.Click();
     }
 
-    public void ClickLocalSSD()
+    public void Click_and_SelectLocalSSD()
     {
         LocalSSD.Click();
-    }
-
-    public void SelectLocalSSD()
-    {
         LocalSSDSelection.Click();
     }
 
-    public void ClickDataCenterLocation()
+    public void Click_and_SelectDataCenterLocation()
     {
         DatacenterLocation.Click();
-    }
-
-    public void SelectDataCenterLocation()
-    {
         DatacenterLocationSelection.Click();
     }
 
-    public void ClickCommitedUsage()
+    public void Click_and_SelectCommitedUsage()
     {
         CommitedUsage.Click();
-    }
-
-    public void SelectCommitedUsage()
-    {
         CommitedUsageSelection.Click();
     }
 
@@ -170,16 +131,15 @@ public class GoogleCloudPricingCalcPage
 
     public void PopUpEmailWindow()
     {
+        _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+        _driver.SwitchTo().Frame(0);
+        _driver.SwitchTo().Frame(0);
         EmailPopUp.Click();
     }
 
-    public void ClickInputEmail()
+    public void Click_and_TypeEmail(string email)
     {
         EmailInput.Click();
-    }
-
-    public void InputEmail(string email)
-    {
         EmailInput.SendKeys(email);
     }
 

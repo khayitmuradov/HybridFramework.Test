@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 
 namespace HybridFramework.Test.Tests;
 
@@ -24,70 +23,43 @@ public class GoogleCloudPricingCalcTests
     {
         LoginPage loginPage = new LoginPage(_driver);
         loginPage.GoToPage();
-        loginPage.EnterEmail("fakeepamacc@gmail.com");
-        loginPage.ClickNext();
-        loginPage.EnterPassword("s944257242S@");
-        loginPage.ClickSignIn();
+        loginPage.EnterEmail_and_ClickNext("fakeepamacc@gmail.com");
+        loginPage.EnterPassword_and_ClickNext("s944257242S@");
 
 
-        _driver.Navigate().GoToUrl("https://cloud.google.com/products/calculator");
-        _driver.SwitchTo().Frame(0);
-        _driver.SwitchTo().Frame(0);
         GoogleCloudPricingCalcPage googleCloudPricingCalcPage = new GoogleCloudPricingCalcPage(_driver);
+        googleCloudPricingCalcPage.GoToPage();
         googleCloudPricingCalcPage.ClickComputEngineButton();
-        googleCloudPricingCalcPage.ClickInstances();
-        googleCloudPricingCalcPage.InputInstance();
-        googleCloudPricingCalcPage.ClickOperatingSys();
-        googleCloudPricingCalcPage.SelectOS();
-        googleCloudPricingCalcPage.ClickProvisioningModel();
-        googleCloudPricingCalcPage.SelectProvisioningModel();
-        googleCloudPricingCalcPage.ClickSeries();
-        googleCloudPricingCalcPage.SelectSeries();
-        googleCloudPricingCalcPage.ClickMachineType();
-        googleCloudPricingCalcPage.SelectMachineType();
+        googleCloudPricingCalcPage.Click_and_InputInstances();
+        googleCloudPricingCalcPage.Click_and_SelectOperatingSys();
+        googleCloudPricingCalcPage.Click_and_SelectProvisioningModel();
+        googleCloudPricingCalcPage.Click_and_SelectSeries();
+        googleCloudPricingCalcPage.Click_and_SelectMachineType();
         googleCloudPricingCalcPage.AddGPU();
-        googleCloudPricingCalcPage.ClickGPUType();
-        googleCloudPricingCalcPage.SelectGPUType();
-        googleCloudPricingCalcPage.ClickNumberOfGPUs();
-        googleCloudPricingCalcPage.SelectNumberOfGPUs();
-        googleCloudPricingCalcPage.ClickLocalSSD();
-        googleCloudPricingCalcPage.SelectLocalSSD();
-        googleCloudPricingCalcPage.ClickDataCenterLocation();
-        googleCloudPricingCalcPage.SelectDataCenterLocation();
-        googleCloudPricingCalcPage.ClickCommitedUsage();
-        googleCloudPricingCalcPage.SelectCommitedUsage();
+        googleCloudPricingCalcPage.Click_and_SelectLocalSSD();
+        googleCloudPricingCalcPage.Click_and_SelectDataCenterLocation();
+        googleCloudPricingCalcPage.Click_and_SelectCommitedUsage();
         googleCloudPricingCalcPage.ClickAddToEstimate();
+        string estimatedCost = googleCloudPricingCalcPage.CopyEstimatedCost();
         Thread.Sleep(1000);
 
-
-        _driver.SwitchTo().NewWindow(WindowType.Tab);
-        _driver.Navigate().GoToUrl("https://yopmail.com/");
-
         EmailGeneratorPage emailGeneratorPage = new EmailGeneratorPage(_driver);
+        emailGeneratorPage.GoToPage();
         emailGeneratorPage.GenerateEmail();
         string email = emailGeneratorPage.CopyEmail();
         Thread.Sleep(500);
 
-        _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-        Thread.Sleep(500);
-
-        _driver.SwitchTo().Frame(0);
-        _driver.SwitchTo().Frame(0);
         googleCloudPricingCalcPage.PopUpEmailWindow();
-        googleCloudPricingCalcPage.ClickInputEmail();
-        googleCloudPricingCalcPage.InputEmail(email);
+        googleCloudPricingCalcPage.Click_and_TypeEmail(email);
         googleCloudPricingCalcPage.ClickSendEmailBtn();
 
-
-        _driver.SwitchTo().Window(_driver.WindowHandles[1]);
         Thread.Sleep(1000);
         emailGeneratorPage.ClickEmailInbox();
         emailGeneratorPage.ClickRefresh();
-        _driver.SwitchTo().Frame(2);
         string totalCost = emailGeneratorPage.GetTotalCost();
         
 
-        Assert.That(totalCost, Is.EqualTo("Estimated Monthly Cost: USD 12,854.64"));
+        Assert.That(totalCost, Is.EqualTo(estimatedCost));
         Thread.Sleep(1000);
     }
 
