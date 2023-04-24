@@ -22,8 +22,4 @@
     <PackageReference Include="Selenium.WebDriver" Version="4.8.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\" />
-  </ItemGroup>
-
 </Project>

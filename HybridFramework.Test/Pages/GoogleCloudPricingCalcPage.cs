@@ -41,7 +41,7 @@ public class GoogleCloudPricingCalcPage
     private IWebElement GetIntoMainForm => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("mainForm")));
     private IWebElement AddToEstimateBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".layout-align-end-start:nth-child(22) > .md-raised")));
     private IWebElement CopyTotalEstimatedCost => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@class='cpc-cart-total']")));
-    
+
     private IWebElement EmailPopUp => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("(//button[@class='md-fab md-primary md-mini md-button md-ink-ripple'])[2]")));
     private IWebElement EmailInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("input_563")));
     private IWebElement SendEmailBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".md-raised:nth-child(2)")));

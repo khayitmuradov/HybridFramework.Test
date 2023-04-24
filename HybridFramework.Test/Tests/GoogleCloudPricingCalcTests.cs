@@ -1,28 +1,33 @@
-﻿using HybridFramework.Test.Pages;
+﻿using HybridFramework.Test.Models;
+using HybridFramework.Test.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace HybridFramework.Test.Tests;
-
+#nullable disable
 public class GoogleCloudPricingCalcTests
 {
     private IWebDriver _driver;
+    private List<User> _credentialsList;
+    private User _credentials;
 
     [SetUp]
     public void SetUp()
     {
         _driver = new ChromeDriver();
         _driver.Manage().Window.Maximize();
+        _credentialsList = ConfigurationHelper.
+            ReadJsonConfiguration<List<User>>("credentials/credentials.json");
     }
 
     [Test]
     public void TestIt()
     {
+        _credentials = _credentialsList[0];
         LoginPage loginPage = new LoginPage(_driver);
         loginPage.GoToPage();
-        loginPage.EnterEmail_and_ClickNext("fakeepamacc@gmail.com");
-        loginPage.EnterPassword_and_ClickNext("s944257242S@");
+        loginPage.EnterEmail_and_ClickNext(_credentials.Email);
+        loginPage.EnterPassword_and_ClickNext(_credentials.Password);
 
         GoogleCloudPricingCalcPage googleCloudPricingCalcPage = new GoogleCloudPricingCalcPage(_driver);
         googleCloudPricingCalcPage.GoToPage();
