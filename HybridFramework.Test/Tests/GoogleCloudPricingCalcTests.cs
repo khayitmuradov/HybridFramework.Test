@@ -70,13 +70,7 @@ public class GoogleCloudPricingCalcTests
     [TearDown]
     public void TearDown()
     {
-        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
-        {
-            var screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
-            var screenshotPath = Path.Combine(TestContext.CurrentContext.WorkDirectory, $"screenshots/{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
-            screenshot.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
-            TestContext.AddTestAttachment(screenshotPath, "Screenshot of failed test");
-        }
+        WebDriverManager.TakeScreenshot();
         _driver.Quit();
     }
 }
