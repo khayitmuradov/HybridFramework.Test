@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 #nullable disable
-namespace HybridFramework.Test.Tests;
+namespace HybridFramework.Test;
 
 public class ConfigurationHelper
 {

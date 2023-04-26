@@ -13,7 +13,7 @@ public class LoginPage
     public LoginPage(IWebDriver driver)
     {
         _driver = driver;
-        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
     }
 
     private IWebElement EmailInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("input[type='email']")));

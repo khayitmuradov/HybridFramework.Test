@@ -1,7 +1,11 @@
 ﻿using HybridFramework.Test.Models;
 using HybridFramework.Test.Pages;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace HybridFramework.Test.Tests;
 #nullable disable
@@ -10,6 +14,7 @@ public class GoogleCloudPricingCalcTests
     private IWebDriver _driver;
     private List<User> _CREDENTIALSLIST;
     private User _CREDENTIALS;
+    private WebDriverWait _wait;
 
     [SetUp]
     public void SetUp()
@@ -18,10 +23,12 @@ public class GoogleCloudPricingCalcTests
         _driver.Manage().Window.Maximize();
         _CREDENTIALSLIST = ConfigurationHelper.
             ReadJsonConfiguration<List<User>>("credentials/credentials.json");
+        _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+        
     }
 
     [Test]
-    public void TestIt()
+    public void GoogleCloudPricingCalcTest()
     {
         _CREDENTIALS = _CREDENTIALSLIST[0];
         LoginPage loginPage = new LoginPage(_driver);
@@ -30,6 +37,7 @@ public class GoogleCloudPricingCalcTests
 
         GoogleCloudPricingCalcPage googleCloudPricingCalcPage = new GoogleCloudPricingCalcPage(_driver);
         googleCloudPricingCalcPage.GoToPage();
+        
         googleCloudPricingCalcPage.ClickComputEngineButton();
         googleCloudPricingCalcPage.Click_and_InputInstances();
         googleCloudPricingCalcPage.Click_and_SelectOperatingSys();
@@ -62,6 +70,13 @@ public class GoogleCloudPricingCalcTests
     [TearDown]
     public void TearDown()
     {
+        if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+        {
+            var screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
+            var screenshotPath = Path.Combine(TestContext.CurrentContext.WorkDirectory, $"screenshots/{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.png");
+            screenshot.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
+            TestContext.AddTestAttachment(screenshotPath, "Screenshot of failed test");
+        }
         _driver.Quit();
     }
 }
