@@ -51,7 +51,7 @@ public class GoogleCloudPricingCalcPage
 
     public void GoToPage()
     {
-        Thread.Sleep(1000);
+        Thread.Sleep(5000);
         _driver.Navigate().GoToUrl(_pageUrl);
     }
 
