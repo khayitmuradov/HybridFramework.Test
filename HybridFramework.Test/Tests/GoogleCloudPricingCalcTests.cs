@@ -1,36 +1,18 @@
-﻿using HybridFramework.Test.Models;
-using HybridFramework.Test.Pages;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-
+﻿using HybridFramework.Test.Pages;
 namespace HybridFramework.Test.Tests;
 #nullable disable
-public class GoogleCloudPricingCalcTests
+public class GoogleCloudPricingCalcTests : BasePage
 {
-    private IWebDriver _driver;
-    private List<User> _CREDENTIALSLIST;
-    private User _CREDENTIALS;
-    private WebDriverWait _wait;
-
-    [SetUp]
+    [OneTimeSetUp]
     public void SetUp()
     {
-        _driver = new ChromeDriver();
-        _driver.Manage().Window.Maximize();
-        _CREDENTIALSLIST = ConfigurationHelper.
-            ReadJsonConfiguration<List<User>>("credentials/credentials.json");
-        _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-        
+        Initialize();
     }
 
     [Test]
     public void GoogleCloudPricingCalcTest()
     {
-        _CREDENTIALS = _CREDENTIALSLIST[0];
+        _CREDENTIALS = _CREDENTIALSLIST[4];
         LoginPage loginPage = new LoginPage(_driver);
         loginPage.GoToPage();
         loginPage.Login(_CREDENTIALS.Email, _CREDENTIALS.Password);
@@ -67,10 +49,9 @@ public class GoogleCloudPricingCalcTests
         Assert.That(totalCost, Is.EqualTo(estimatedCost));
     }
 
-    [TearDown]
-    public void TearDown()
+    [OneTimeTearDown]
+    public void CloseDriver()
     {
-        WebDriverManager.TakeScreenshot();
-        _driver.Quit();
+        TearDown();
     }
 }
