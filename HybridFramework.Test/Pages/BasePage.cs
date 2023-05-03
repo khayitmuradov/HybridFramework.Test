@@ -18,7 +18,7 @@ public class BasePage
         _driver = new ChromeDriver();
         _driver.Manage().Window.Maximize();
         _CREDENTIALSLIST = ConfigurationHelper.
-            ReadJsonConfiguration<List<User>>("credentials/credentials.json");
+            ReadJsonConfiguration<List<User>>("../../../credentials.json");
         _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
 
     }
