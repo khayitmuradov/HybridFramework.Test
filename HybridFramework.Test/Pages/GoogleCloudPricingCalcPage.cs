@@ -35,7 +35,7 @@ public class GoogleCloudPricingCalcPage
     private IWebElement NumberOfGPUsSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_445 > span:nth-child(1)")));
     private IWebElement LocalSSD => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("select_option_472")));
     private IWebElement LocalSSDSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_94 .md-text")));
-    private IWebElement DatacenterLocation => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_94 .md-text")));
+    //private IWebElement DatacenterLocation => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_94 .md-text")));
     private IWebElement DatacenterLocationSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_option_253 > .md-text")));
     private IWebElement CommitedUsage => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_95 > span:nth-child(1)")));
     private IWebElement CommitedUsageSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("select_option_134")));
@@ -111,7 +111,7 @@ public class GoogleCloudPricingCalcPage
 
     public void Click_and_SelectDataCenterLocation()
     {
-        DatacenterLocation.Click();
+        //DatacenterLocation.Click();
         DatacenterLocationSelection.Click();
     }
 
