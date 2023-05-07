@@ -53,7 +53,7 @@ public class GoogleCloudPricingCalcPage : BasePage
     {
         Thread.Sleep(5000);
         _driver.SwitchTo().Frame(0);
-        Thread.Sleep(500);
+        Thread.Sleep(5000);
         _driver.SwitchTo().Frame(0);
         ComputeEngineButton.Click();
     }
