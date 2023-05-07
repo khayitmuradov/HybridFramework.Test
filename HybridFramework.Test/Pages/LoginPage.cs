@@ -1,19 +1,15 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-
+#nullable disable
 namespace HybridFramework.Test.Pages;
 
-public class LoginPage
+public class LoginPage : BasePage
 {
-    private readonly IWebDriver _driver;
-    private readonly WebDriverWait _wait;
     private readonly string _pageUrl = "https://accounts.google.com/";
 
-    public LoginPage(IWebDriver driver)
+    public LoginPage(IWebDriver _driver) : base(_driver)
     {
-        _driver = driver;
-        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
     }
 
     private IWebElement EmailInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("input[type='email']")));
@@ -24,6 +20,19 @@ public class LoginPage
     public void GoToPage()
     {
         _driver.Navigate().GoToUrl(_pageUrl);
+
+        _wait.Until(_driver =>
+        {
+            try
+            {
+                string readyState = ((IJavaScriptExecutor)_driver).ExecuteScript("return document.readyState").ToString();
+                return readyState.Equals("complete");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        });
     }
 
     public void Login(string email, string password)
@@ -32,5 +41,7 @@ public class LoginPage
         NextButton.Click();
         PasswordInput.SendKeys(password);
         SignInButton.Click();
+        WebDriverWait loginWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+        loginWait.Until(ExpectedConditions.TitleContains("Google"));
     }
 }

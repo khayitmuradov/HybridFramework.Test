@@ -1,19 +1,14 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace HybridFramework.Test.Pages;
 
-public class EmailGeneratorPage
+public class EmailGeneratorPage : BasePage
 {
-    private readonly IWebDriver _driver;
-    private readonly WebDriverWait _wait;
     private readonly string _pageUrl = "https://yopmail.com/";
 
-    public EmailGeneratorPage(IWebDriver driver)
+    public EmailGeneratorPage(IWebDriver _driver) : base(_driver)
     {
-        _driver = driver;
-        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
     }
 
     private IWebElement EmailGenerateBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("a:nth-child(1) p")));
@@ -56,6 +51,10 @@ public class EmailGeneratorPage
     public void ClickRefresh()
     {
         RefreshPage.Click();
+    }
+
+    public void SwitchFrame()
+    {
         _driver.SwitchTo().Frame(2);
     }
 }

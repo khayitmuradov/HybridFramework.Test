@@ -1,7 +1,8 @@
 ﻿using HybridFramework.Test.Pages;
+
 namespace HybridFramework.Test.Tests;
 #nullable disable
-public class GoogleCloudPricingCalcTests : BasePage
+public class GoogleCloudPricingCalcTests : CommonConditions
 {
     [OneTimeSetUp]
     public void SetUp()
@@ -14,26 +15,16 @@ public class GoogleCloudPricingCalcTests : BasePage
     {
         _CREDENTIALS = _CREDENTIALSLIST[4];
         LoginPage loginPage = new LoginPage(_driver);
+        GoogleCloudPricingCalcPage googleCloudPricingCalcPage = new GoogleCloudPricingCalcPage(_driver);
+        EmailGeneratorPage emailGeneratorPage = new EmailGeneratorPage(_driver);
         loginPage.GoToPage();
         loginPage.Login(_CREDENTIALS.Email, _CREDENTIALS.Password);
 
-        GoogleCloudPricingCalcPage googleCloudPricingCalcPage = new GoogleCloudPricingCalcPage(_driver);
         googleCloudPricingCalcPage.GoToPage();
-        
         googleCloudPricingCalcPage.ClickComputEngineButton();
-        googleCloudPricingCalcPage.Click_and_InputInstances();
-        googleCloudPricingCalcPage.Click_and_SelectOperatingSys();
-        googleCloudPricingCalcPage.Click_and_SelectProvisioningModel();
-        googleCloudPricingCalcPage.Click_and_SelectSeries();
-        googleCloudPricingCalcPage.Click_and_SelectMachineType();
-        googleCloudPricingCalcPage.AddGPU();
-        googleCloudPricingCalcPage.Click_and_SelectLocalSSD();
-        googleCloudPricingCalcPage.Click_and_SelectDataCenterLocation();
-        googleCloudPricingCalcPage.Click_and_SelectCommitedUsage();
-        googleCloudPricingCalcPage.ClickAddToEstimate();
+        googleCloudPricingCalcPage.FillTheForm();
         string estimatedCost = googleCloudPricingCalcPage.CopyEstimatedCost();
 
-        EmailGeneratorPage emailGeneratorPage = new EmailGeneratorPage(_driver);
         emailGeneratorPage.GoToPage();
         emailGeneratorPage.GenerateEmail();
         string email = emailGeneratorPage.CopyEmail();
@@ -44,6 +35,8 @@ public class GoogleCloudPricingCalcTests : BasePage
 
         emailGeneratorPage.ClickEmailInbox();
         emailGeneratorPage.ClickRefresh();
+        emailGeneratorPage.ClickRefresh();
+        emailGeneratorPage.SwitchFrame();
         string totalCost = emailGeneratorPage.GetTotalCost();
 
         Assert.That(totalCost, Is.EqualTo(estimatedCost));

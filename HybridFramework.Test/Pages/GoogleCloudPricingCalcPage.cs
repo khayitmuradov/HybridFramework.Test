@@ -1,19 +1,14 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-
+#nullable disable
 namespace HybridFramework.Test.Pages;
 
-public class GoogleCloudPricingCalcPage
+public class GoogleCloudPricingCalcPage : BasePage
 {
-    private readonly IWebDriver _driver;
-    private readonly WebDriverWait _wait;
     private readonly string _pageUrl = "https://cloud.google.com/products/calculator";
 
-    public GoogleCloudPricingCalcPage(IWebDriver driver)
+    public GoogleCloudPricingCalcPage(IWebDriver _driver) : base(_driver)
     {
-        _driver = driver;
-        _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
     }
 
     private IWebElement ComputeEngineButton => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#tab-item-1 .hexagon-in2")));
@@ -35,7 +30,6 @@ public class GoogleCloudPricingCalcPage
     private IWebElement NumberOfGPUsSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_445 > span:nth-child(1)")));
     private IWebElement LocalSSD => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("select_option_472")));
     private IWebElement LocalSSDSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_94 .md-text")));
-    //private IWebElement DatacenterLocation => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_94 .md-text")));
     private IWebElement DatacenterLocationSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_option_253 > .md-text")));
     private IWebElement CommitedUsage => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#select_value_label_95 > span:nth-child(1)")));
     private IWebElement CommitedUsageSelection => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("select_option_134")));
@@ -52,8 +46,34 @@ public class GoogleCloudPricingCalcPage
 
     public void GoToPage()
     {
-        Thread.Sleep(10000);
         _driver.Navigate().GoToUrl(_pageUrl);
+    }
+
+    public void FillTheForm()
+    {
+        Instances.Click();
+        InstancesInput.SendKeys("4");
+        OperatingSys.Click();
+        OperatingSysSelection.Click();
+        OperatingSysSelection2.Click();
+        ProvisioningModel.Click();
+        ProvisioningModelSelection.Click();
+        Series.Click();
+        SeriesSelection.Click();
+        MachineType.Click();
+        MachineTypeSelection.Click();
+        AddGPUCheckbox.Click();
+        GPUType.Click();
+        GPUTypeSelection.Click();
+        NumberOfGPUs.Click();
+        NumberOfGPUsSelection.Click();
+        LocalSSD.Click();
+        LocalSSDSelection.Click();
+        DatacenterLocationSelection.Click();
+        CommitedUsage.Click();
+        CommitedUsageSelection.Click();
+        GetIntoMainForm.Click();
+        AddToEstimateBtn.Click();
     }
 
     public void ClickComputEngineButton()
@@ -61,70 +81,6 @@ public class GoogleCloudPricingCalcPage
         firstFrame.SwitchTo();
         secondFrame.SwitchTo();
         ComputeEngineButton.Click();
-    }
-
-    public void Click_and_InputInstances()
-    {
-        Instances.Click();
-        InstancesInput.SendKeys("4");
-    }
-
-    public void Click_and_SelectOperatingSys()
-    {
-        OperatingSys.Click();
-        OperatingSysSelection.Click();
-        OperatingSysSelection2.Click();
-    }
-
-    public void Click_and_SelectProvisioningModel()
-    {
-        ProvisioningModel.Click();
-        ProvisioningModelSelection.Click();
-    }
-
-    public void Click_and_SelectSeries()
-    {
-        Series.Click();
-        SeriesSelection.Click();
-    }
-
-    public void Click_and_SelectMachineType()
-    {
-        MachineType.Click();
-        MachineTypeSelection.Click();
-    }
-
-    public void AddGPU()
-    {
-        AddGPUCheckbox.Click();
-        GPUType.Click();
-        GPUTypeSelection.Click();
-        NumberOfGPUs.Click();
-        NumberOfGPUsSelection.Click();
-    }
-
-    public void Click_and_SelectLocalSSD()
-    {
-        LocalSSD.Click();
-        LocalSSDSelection.Click();
-    }
-
-    public void Click_and_SelectDataCenterLocation()
-    {
-        //DatacenterLocation.Click();
-        DatacenterLocationSelection.Click();
-    }
-
-    public void Click_and_SelectCommitedUsage()
-    {
-        CommitedUsage.Click();
-        CommitedUsageSelection.Click();
-    }
-
-    public void ClickAddToEstimate()
-    {
-        GetIntoMainForm.Click();
-        AddToEstimateBtn.Click();
     }
 
     public string CopyEstimatedCost()

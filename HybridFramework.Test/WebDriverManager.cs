@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
-#nullable disable
+#pragma warning disable
 
 namespace HybridFramework.Test;
 
