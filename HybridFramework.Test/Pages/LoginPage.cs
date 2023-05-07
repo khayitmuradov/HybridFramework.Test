@@ -20,19 +20,6 @@ public class LoginPage : BasePage
     public void GoToPage()
     {
         _driver.Navigate().GoToUrl(_pageUrl);
-
-        _wait.Until(_driver =>
-        {
-            try
-            {
-                string readyState = ((IJavaScriptExecutor)_driver).ExecuteScript("return document.readyState").ToString();
-                return readyState.Equals("complete");
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        });
     }
 
     public void Login(string email, string password)
@@ -41,7 +28,7 @@ public class LoginPage : BasePage
         NextButton.Click();
         PasswordInput.SendKeys(password);
         SignInButton.Click();
-        WebDriverWait loginWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+        WebDriverWait loginWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(60));
         loginWait.Until(ExpectedConditions.TitleContains("Google"));
     }
 }
