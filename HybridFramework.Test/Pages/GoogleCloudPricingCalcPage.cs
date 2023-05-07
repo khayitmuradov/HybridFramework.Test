@@ -52,7 +52,8 @@ public class GoogleCloudPricingCalcPage : BasePage
     public void ClickComputEngineButton()
     {
         _driver.SwitchTo().Frame(0);
-        SecondFrame.SwitchTo();
+        Thread.Sleep(500);
+        _driver.SwitchTo().Frame(0);
         ComputeEngineButton.Click();
     }
 
