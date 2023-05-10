@@ -1,4 +1,4 @@
-﻿namespace HybridFramework.Test;
+﻿namespace HybridFramework.Test.Model;
 
 public class User
 {

@@ -2,9 +2,9 @@
 using OpenQA.Selenium;
 #pragma warning disable
 
-namespace HybridFramework.Test;
+namespace HybridFramework.Test.Utils;
 
-public class WebDriverManager
+public class ErrorListener
 {
     private static IWebDriver _driver;
 

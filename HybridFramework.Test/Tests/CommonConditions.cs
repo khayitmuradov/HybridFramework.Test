@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using HybridFramework.Test.Model;
+using HybridFramework.Test.Utils;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
@@ -17,7 +19,7 @@ public class CommonConditions
         _driver = new ChromeDriver();
         _driver.Manage().Window.Maximize();
         _CREDENTIALSLIST = ConfigurationHelper.
-            ReadJsonConfiguration<List<User>>("../../../credentials.json");
+            ReadJsonConfiguration<List<User>>("../../../TestData/credentials.json");
         _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
 
     }
@@ -25,7 +27,7 @@ public class CommonConditions
     [TearDown]
     public void TearDown()
     {
-        WebDriverManager.TakeScreenshot();
+        ErrorListener.TakeScreenshot();
         _driver.Quit();
     }
 }
