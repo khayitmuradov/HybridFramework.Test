@@ -14,17 +14,12 @@ public class EmailGeneratorPage : BasePage
     private IWebElement EmailGenerateBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("a:nth-child(1) p")));
     private IWebElement Email => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@id='geny']")));
     private IWebElement EmailInbox => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".md:nth-child(3) > .material-icons-outlined")));
-    private IWebElement RefreshPage => _wait.Until(ExpectedConditions.ElementExists(By.Id("refresh")));
-    private IWebElement TotalCost => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@id='mail']/div/div/table/tbody/tr[2]/td/h2")));
-
-    public void GoToPage()
-    {
-        _driver.SwitchTo().NewWindow(WindowType.Tab);
-        _driver.Navigate().GoToUrl(_pageUrl);
-    }
+    private IWebElement TotalCost => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("(//h3)[2]")));
 
     public void GenerateEmail()
     {
+        OpenNewTab();
+        GoToPage(_pageUrl);
         EmailGenerateBtn.Click();
     }
 
@@ -33,28 +28,21 @@ public class EmailGeneratorPage : BasePage
         return Email.Text;
     }
 
-    public void ClickEmailInbox()
+    public void CheckEmailInbox_and_VerifyTotalCostIsStillSameOrNot()
     {
         _driver.SwitchTo().Window(_driver.WindowHandles[1]);
         EmailInbox.Click();
+        RefreshPage();
+        RefreshPage();
+        _driver.SwitchTo().Frame(2);
     }
 
     public string GetTotalCost()
     {
         string copiedText = TotalCost.Text;
         string[] words = copiedText.Split(' ');
-        string cost = words[4];
+        string cost = words[1];
 
         return cost;
-    }
-
-    public void ClickRefresh()
-    {
-        RefreshPage.Click();
-    }
-
-    public void SwitchFrame()
-    {
-        _driver.SwitchTo().Frame(2);
     }
 }

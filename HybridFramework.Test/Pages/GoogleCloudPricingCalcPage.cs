@@ -41,18 +41,15 @@ public class GoogleCloudPricingCalcPage : BasePage
     private IWebElement EmailInput => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("input_564")));
     private IWebElement SendEmailBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".md-raised:nth-child(2)")));
 
-    private IWebDriver firstFrame => _wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.XPath("//iframe[@src='https://cloud.google.com/frame/products/calculator/index_d6a98ba38837346d20babc06ff2153b68c2990fa24322fe52c5f83ec3a78c6a0.frame']")));
+    private IWebDriver FirstFrame => _wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.XPath("//iframe[@src='https://cloud.google.com/frame/products/calculator/index_d6a98ba38837346d20babc06ff2153b68c2990fa24322fe52c5f83ec3a78c6a0.frame']")));
     private IWebDriver SecondFrame => _wait.Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(By.XPath("//iframe[@id='myFrame']")));
 
-    public void GoToPage()
-    {
-        _driver.Navigate().GoToUrl(_pageUrl);
-    }
-
+    
     public void ClickComputEngineButton()
     {
-        _driver.SwitchTo().Frame(0);
-        _driver.SwitchTo().Frame(0);
+        GoToPage(_pageUrl);
+        FirstFrame.SwitchTo();
+        SecondFrame.SwitchTo();
         ComputeEngineButton.Click();
     }
 

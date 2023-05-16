@@ -2,7 +2,8 @@
 
 namespace HybridFramework.Test.Tests;
 #nullable disable
-public class GoogleCloudPricingCalcTests : CommonConditions
+[TestFixture]
+public class GoogleCloudPricingCalcTests : BaseTest
 {
     [OneTimeSetUp]
     public void SetUp()
@@ -13,19 +14,18 @@ public class GoogleCloudPricingCalcTests : CommonConditions
     [Test]
     public void GoogleCloudPricingCalcTest()
     {
-        _CREDENTIALS = _CREDENTIALSLIST[4];
+        _credentials = _credentialsList[4];
         LoginPage loginPage = new LoginPage(_driver);
         GoogleCloudPricingCalcPage googleCloudPricingCalcPage = new GoogleCloudPricingCalcPage(_driver);
         EmailGeneratorPage emailGeneratorPage = new EmailGeneratorPage(_driver);
         loginPage.GoToPage();
-        loginPage.Login(_CREDENTIALS.Email, _CREDENTIALS.Password);
+        loginPage.Login(_credentials.Email, _credentials.Password);
 
-        googleCloudPricingCalcPage.GoToPage();
+
         googleCloudPricingCalcPage.ClickComputEngineButton();
         googleCloudPricingCalcPage.FillTheForm();
         string estimatedCost = googleCloudPricingCalcPage.CopyEstimatedCost();
 
-        emailGeneratorPage.GoToPage();
         emailGeneratorPage.GenerateEmail();
         string email = emailGeneratorPage.CopyEmail();
 
@@ -33,10 +33,7 @@ public class GoogleCloudPricingCalcTests : CommonConditions
         googleCloudPricingCalcPage.Click_and_TypeEmail(email);
         googleCloudPricingCalcPage.ClickSendEmailBtn();
 
-        emailGeneratorPage.ClickEmailInbox();
-        emailGeneratorPage.ClickRefresh();
-        emailGeneratorPage.ClickRefresh();
-        emailGeneratorPage.SwitchFrame();
+        emailGeneratorPage.CheckEmailInbox_and_VerifyTotalCostIsStillSameOrNot();
         string totalCost = emailGeneratorPage.GetTotalCost();
 
         Assert.That(totalCost, Is.EqualTo(estimatedCost));
