@@ -7,9 +7,7 @@ public class GoogleCloudPricingCalcPage : BasePage
 {
     private readonly string _pageUrl = "https://cloud.google.com/products/calculator";
 
-    public GoogleCloudPricingCalcPage(IWebDriver _driver) : base(_driver)
-    {
-    }
+    public GoogleCloudPricingCalcPage(IWebDriver _driver) : base(_driver) { }
 
     private IWebElement ComputeEngineButton => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("#tab-item-1 .hexagon-in2")));
     private IWebElement Instances => _wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("input_96")));

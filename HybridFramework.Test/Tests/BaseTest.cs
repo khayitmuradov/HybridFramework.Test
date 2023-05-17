@@ -11,7 +11,6 @@ public class BaseTest
     public IWebDriver _driver;
     public List<User> _credentialsList;
     public User _credentials;
-    public TestDataReader _testDataReader;
     public WebDriverWait _wait;
     public WebDriverManager _driverManager;
 
@@ -20,10 +19,9 @@ public class BaseTest
     {
         _driverManager = new WebDriverManager();
         _driver = _driverManager.CreateWebDriver("chrome");
-        _driver.Manage().Window.Maximize();
-        _testDataReader = new TestDataReader();
         _credentialsList = ConfigurationHelper.
-            ReadJsonConfiguration<List<User>>("../../../TestData/credentials.json");
+            ReadJsonConfiguration<List<User>>("../../../TestDatas/appsettings.development.json");
+
         _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
     }
 

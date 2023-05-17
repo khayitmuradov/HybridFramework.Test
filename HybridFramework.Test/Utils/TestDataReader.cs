@@ -11,8 +11,8 @@ public class TestDataReader
         var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
         Configuration = new ConfigurationBuilder()
-            .AddJsonFile("../../../TestData/appsettings.json")
-            .AddJsonFile($"../../../TestData/appsettings.{environmentName}.json", optional: true)
+            .AddJsonFile("../../../TestDatas/appsettings.json")
+            .AddJsonFile($"../../../TestDatas/appsettings.{environmentName}.json", optional: true)
             .Build();
     }
 

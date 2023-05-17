@@ -7,9 +7,7 @@ public class EmailGeneratorPage : BasePage
 {
     private readonly string _pageUrl = "https://yopmail.com/";
 
-    public EmailGeneratorPage(IWebDriver _driver) : base(_driver)
-    {
-    }
+    public EmailGeneratorPage(IWebDriver _driver) : base(_driver) { }
 
     private IWebElement EmailGenerateBtn => _wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("a:nth-child(1) p")));
     private IWebElement Email => _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@id='geny']")));
