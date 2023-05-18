@@ -22,7 +22,6 @@ public class LoginPage : BasePage
         NextButton.Click();
         PasswordInput.SendKeys(password);
         SignInButton.Click();
-        Thread.Sleep(5000);
         WebDriverWait loginWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(60));
         loginWait.Until(ExpectedConditions.TitleContains("Google"));
     }

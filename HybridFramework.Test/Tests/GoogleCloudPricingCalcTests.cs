@@ -11,7 +11,7 @@ public class GoogleCloudPricingCalcTests : BaseTest
         Initialize();
     }
 
-    [Test]
+    [Test, Category("OtherTest")]
     public void GoogleCloudPricingCalcTest()
     {
         _credentials = _credentialsList[0];

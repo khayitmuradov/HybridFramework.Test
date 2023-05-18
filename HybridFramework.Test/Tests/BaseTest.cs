@@ -19,10 +19,10 @@ public class BaseTest
     {
         _driverManager = new WebDriverManager();
         _driver = _driverManager.CreateWebDriver("chrome");
+        _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+
         _credentialsList = ConfigurationHelper.
             ReadJsonConfiguration<List<User>>("../../../TestDatas/appsettings.development.json");
-
-        _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
     }
 
     [TearDown]
